@@ -28,7 +28,7 @@ var fight = function(enemyName) {
 
                 window.alert(playerName + " has decided to skip this fight. Goodbye!");
 
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
 
                 console.log("playerMoney", playerMoney);
 
@@ -37,7 +37,8 @@ var fight = function(enemyName) {
             }
         }
 
-        enemyHealth = enemyHealth - playerAttack;
+        var damage = randomNumber(playerAttack - 3, playerAttack);
+        enemyHealth = Math.max(0, enemyHealth - damage);
 
         console.log(
             playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
@@ -58,7 +59,8 @@ var fight = function(enemyName) {
         
         }
         
-        playerHealth = playerHealth - enemyAttack;
+        var damge = randomNumber(enemyAttack - 3, enemyAttack);
+        playerHealth = Math.max(0, playerHealth - damage);
         
         console.log(
             enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
@@ -98,7 +100,7 @@ var startGame = function() {
     
             var pickedEnemyName = enemyNames[i];
     
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40,60);
     
             debugger;
     
@@ -106,7 +108,7 @@ var startGame = function() {
 
             if (playerHealth > 0 && i < enemyNames.length - 1) {
 
-                var storeConfirm = window.confirm("The ifhgt is over, visit the store before the next round?");
+                var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
 
                 if (storeConfirm) {
                     shop();
@@ -128,7 +130,6 @@ var startGame = function() {
 var endGame = function() {
 
     if (playerHealth > 0) {
-
         window.alert("Great job, you've survied the game. You now have a score of " + playerMoney + ".");
     }
 
@@ -183,5 +184,12 @@ var shop = function() {
             break;
     }
 };
+
+var randomNumber = function(min, max) {
+
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+}
 
 startGame();
